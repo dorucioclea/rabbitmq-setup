@@ -23,7 +23,7 @@ string exchange = "my_exchange";
 string queueName = "demo";
 
 channel.ExchangeDeclare(exchange, "direct");
-channel.QueueDeclare(queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
 channel.QueueBind(queueName, exchange, queueName);
 
 var consumer = new EventingBasicConsumer(channel);
