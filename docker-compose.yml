@@ -57,6 +57,26 @@ services:
         limits:
           cpus: '0.50'
           memory: 256M
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    networks:
+      - rabbitmq-cluster
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    ports:
+      - 3000:3000
+    networks:
+      - rabbitmq-cluster
 networks:
   rabbitmq-cluster:
     driver: bridge
