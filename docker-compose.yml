@@ -15,8 +15,8 @@ services:
       - ./rabbitmq1:/var/lib/rabbitmq
       - ./rabbitmq1:/certs
     ports:
-      - 15672:15672
-      - 5671:5671
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - rabbitmq-cluster
     healthcheck:
@@ -44,6 +44,9 @@ services:
     volumes:
       - ./rabbitmq2:/var/lib/rabbitmq
       - ./rabbitmq2:/certs
+    ports:
+      - "5673:5672"
+      - "15673:15672"
     networks:
       - rabbitmq-cluster
     healthcheck:
