@@ -396,3 +396,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+rabbitmq1/*
+
+rabbitmq2/*
+
+!rabbitmq1/.gitkeep
+!rabbitmq2/.gitkeep
