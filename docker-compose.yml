@@ -71,6 +71,8 @@ services:
     image: grafana/grafana
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
     environment:
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
     ports:
