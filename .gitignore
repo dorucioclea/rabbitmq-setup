@@ -403,3 +403,7 @@ rabbitmq2/*
 
 !rabbitmq1/.gitkeep
 !rabbitmq2/.gitkeep
+
+server.cert
+server.key
+.env

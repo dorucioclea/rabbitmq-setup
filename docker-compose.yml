@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  rabbit1:
+    image: rabbitmq:3-management
+    hostname: rabbit1
+    environment:
+      RABBITMQ_ERLANG_COOKIE: 'rabbitmq_cookie'
+      RABBITMQ_NODENAME: 'rabbit@rabbit1'
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbitmq ssl_cert_login_from common_name -rabbit ssl_options [{cacertfile,\"/certs/ca.crt\"},{certfile,\"/certs/server.crt\"},{keyfile,\"/certs/server.key\"},{verify,verify_peer},{fail_if_no_peer_cert,true}]"
+
+      RABBITMQ_PLUGINS: "rabbitmq_management rabbitmq_mqtt rabbitmq_federation"
+    volumes:
+      - ./rabbitmq1:/var/lib/rabbitmq
+      - ./rabbitmq1:/certs
+    ports:
+      - 15672:15672
+      - 5671:5671
+    networks:
+      - rabbitmq-cluster
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+  rabbit2:
+    image: rabbitmq:3-management
+    hostname: rabbit2
+    environment:
+      RABBITMQ_ERLANG_COOKIE: 'rabbitmq_cookie'
+      RABBITMQ_NODENAME: 'rabbit@rabbit2'
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbitmq ssl_cert_login_from common_name -rabbit ssl_options [{cacertfile,\"/certs/ca.crt\"},{certfile,\"/certs/server.crt\"},{keyfile,\"/certs/server.key\"},{verify,verify_peer},{fail_if_no_peer_cert,true}]"
+
+      RABBITMQ_PLUGINS: "rabbitmq_management rabbitmq_mqtt rabbitmq_federation"
+    volumes:
+      - ./rabbitmq2:/var/lib/rabbitmq
+      - ./rabbitmq2:/certs
+    networks:
+      - rabbitmq-cluster
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+networks:
+  rabbitmq-cluster:
+    driver: bridge
