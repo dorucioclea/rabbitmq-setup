@@ -405,7 +405,10 @@ rabbitmq2/*
 !rabbitmq2/.gitkeep
 
 server.cert
-
 server.key
+
+grafana/server.create
+grafana/server.key
+grafana/server.csr
 
 .env
