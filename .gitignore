@@ -407,8 +407,8 @@ rabbitmq2/*
 server.cert
 server.key
 
-grafana/server.create
-grafana/server.key
-grafana/server.csr
+grafana/certs/server.crt
+grafana/certs/server.key
+grafana/certs/server.csr
 
 .env
